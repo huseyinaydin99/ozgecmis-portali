@@ -31,20 +31,23 @@ public class HomeController {
 
     @GetMapping("/")
     public String home() {
-        UserProfile profile = new UserProfile();
+        /*UserProfile profile = new UserProfile();
         profile.setId(1);
         profile.setUserName("huseyinaydin99");
         profile.setDesignation("Atama");
         profile.setFirstName("Hüseyin");
         profile.setLastName("Aydın");
-        profile.setTheme(1);
+        profile.setTheme(1);*/
+        Optional<UserProfile> userProfileOptional = userProfileRepository.findByUserName("huseyinaydin99");
+        UserProfile profile = userProfileOptional.get();
 
         Job job = new Job();
         job.setCompany("Şirket 1");
         job.setDesignation("Atama");
         job.setId(1);
         job.setStartDate(LocalDate.of(2024, 1, 1));
-        job.setEndDate(LocalDate.of(2025,1,1));
+        //job.setEndDate(LocalDate.of(2025,1,1));
+        job.setCurrentJob(true);
 
         Job job2 = new Job();
         job2.setCompany("Şirket 2");
@@ -53,7 +56,9 @@ public class HomeController {
         job2.setStartDate(LocalDate.of(2022, 1, 1));
         job2.setEndDate(LocalDate.of(2026,1,1));
 
-        profile.setJobs(Arrays.asList(job, job2));
+        //profile.setJobs(Arrays.asList(job, job2));
+        profile.getJobs().clear();
+        profile.getJobs().addAll(Arrays.asList(job, job2));
         return "profile";
     }
 

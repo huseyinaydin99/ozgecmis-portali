@@ -4,6 +4,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 //بسم الله الرحمن الرحيم
 
@@ -29,8 +31,38 @@ public class Job {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDate;
 
+    private boolean isCurrentJob;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
+
+    /*
+    @ElementCollection kullanıldığında, veriler aynı tabloda tutulmaz.
+    Bunun yerine, JPA, bu koleksiyonu ayrı bir tabloya kaydeder.
+    Bu yeni tablo, koleksiyon elemanlarını saklar ve ilgili ana varlıkla
+    bir ilişki kurar. Yeni oluşturulan tablo genellikle iki sütun içerir:
+    biri ana varlığın id'sini (yani UserProfile'ın id'si),
+    diğeri ise koleksiyon elemanlarını (bu örnekte String değerlerini) tutar.
+    Bu şekilde, koleksiyon elemanları ayrı bir tabloda tutulur, ancak ana varlıkla ilişkili kalır.
+    */
+    @ElementCollection(targetClass = String.class)
+    private List<String> responsibilities = new ArrayList<>();
+
+    public boolean isCurrentJob() {
+        return isCurrentJob;
+    }
+
+    public void setCurrentJob(boolean currentJob) {
+        isCurrentJob = currentJob;
+    }
+
+    public List<String> getResponsibilities() {
+        return responsibilities;
+    }
+
+    public void setResponsibilities(List<String> responsibilities) {
+        this.responsibilities = responsibilities;
+    }
 
     public int getId() {
         return id;
@@ -70,5 +102,16 @@ public class Job {
 
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
+    }
+
+    @Override
+    public String toString() {
+        return "Job{" +
+                "id=" + id +
+                ", company='" + company + '\'' +
+                ", designation='" + designation + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                '}';
     }
 }
