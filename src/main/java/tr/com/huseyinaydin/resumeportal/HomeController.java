@@ -32,7 +32,7 @@ public class HomeController {
         userProfile.orElseThrow(() -> new RuntimeException("Kullanıcı bulunamadı hacım: " + userId));
 
         model.addAttribute("userId", userId);
-        model.addAttribute("userProfile", userProfile);
+        model.addAttribute("userProfile", userProfile.get());
 
         return "profile-templates/" + userProfile.get().getId() + "/index";
     }
