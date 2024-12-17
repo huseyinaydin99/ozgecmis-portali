@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import tr.com.huseyinaydin.resumeportal.models.Education;
 import tr.com.huseyinaydin.resumeportal.models.Job;
 import tr.com.huseyinaydin.resumeportal.models.UserProfile;
 
@@ -48,6 +49,9 @@ public class HomeController {
         job.setStartDate(LocalDate.of(2024, 1, 1));
         //job.setEndDate(LocalDate.of(2025,1,1));
         job.setCurrentJob(true);
+        job.getResponsibilities().add("Spring Framework");
+        job.getResponsibilities().add("Spring Boot");
+        job.getResponsibilities().add("Hibernate");
 
         Job job2 = new Job();
         job2.setCompany("Şirket 2");
@@ -55,10 +59,38 @@ public class HomeController {
         job2.setId(2);
         job2.setStartDate(LocalDate.of(2022, 1, 1));
         job2.setEndDate(LocalDate.of(2026,1,1));
+        job.getResponsibilities().add(".NET Framework");
+        job.getResponsibilities().add(".NET Core");
+        job.getResponsibilities().add("Dapper");
+
+        Education e1 = new Education();
+        e1.setCollege("Bor MYO");
+        e1.setQualification("Ön lisans");
+        e1.setSummary("Çok çalıştım çoook");
+        e1.setStartDate(LocalDate.of(2012, 5, 1));
+        e1.setEndDate(LocalDate.of(2014, 1, 1));
+
+        Education e2 = new Education();
+        e2.setCollege("Hayat Üniversitesi");
+        e2.setQualification("Üst seviye");
+        e2.setSummary("Acı geliştirir insanı.");
+        e2.setStartDate(LocalDate.of(2014, 5, 1));
+        e2.setEndDate(LocalDate.of(2024, 1, 1));
+
+        profile.getEducations().clear();
+        profile.getEducations().add(e1);
+        profile.getEducations().add(e2);
+        profile.getSkills().clear();
+        profile.getSkills().add("Java");
+        profile.getSkills().add("Spring Framework");
+        profile.getSkills().add("SQL");
+        profile.getSkills().add("JPA/Hibernate");
 
         //profile.setJobs(Arrays.asList(job, job2));
         profile.getJobs().clear();
         profile.getJobs().addAll(Arrays.asList(job, job2));
+
+        userProfileRepository.save(profile);
         return "profile";
     }
 

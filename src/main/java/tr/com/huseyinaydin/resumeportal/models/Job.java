@@ -4,6 +4,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -113,5 +114,18 @@ public class Job {
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
                 '}';
+    }
+
+    /*
+    ay adı (MMM) ve yıl.
+    Ocak 2024
+    Aralık 2023
+    */
+    public String getFormattedStartDate() {
+        return startDate.format(DateTimeFormatter.ofPattern("MMM yyyy"));
+    }
+
+    public String getFormattedEndDate() {
+        return endDate.format(DateTimeFormatter.ofPattern("MMM yyyy"));
     }
 }

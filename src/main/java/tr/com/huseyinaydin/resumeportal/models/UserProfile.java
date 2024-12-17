@@ -46,6 +46,38 @@ public class UserProfile {
     @JoinColumn(name = "id")
     List<Job> jobs = new ArrayList<>();
 
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "id")
+    List<Education> educations = new ArrayList<>();
+
+    /*
+    @ElementCollection kullanıldığında, veriler aynı tabloda tutulmaz.
+    Bunun yerine, JPA, bu koleksiyonu ayrı bir tabloya kaydeder.
+    Bu yeni tablo, koleksiyon elemanlarını saklar ve ilgili ana varlıkla
+    bir ilişki kurar. Yeni oluşturulan tablo genellikle iki sütun içerir:
+    biri ana varlığın id'sini (yani UserProfile'ın id'si),
+    diğeri ise koleksiyon elemanlarını (bu örnekte String değerlerini) tutar.
+    Bu şekilde, koleksiyon elemanları ayrı bir tabloda tutulur, ancak ana varlıkla ilişkili kalır.
+    */
+    @ElementCollection(targetClass = String.class)
+    List<String> skills = new ArrayList<>();
+
+    public List<String> getSkills() {
+        return skills;
+    }
+
+    public void setSkills(List<String> skills) {
+        this.skills = skills;
+    }
+
+    public List<Education> getEducations() {
+        return educations;
+    }
+
+    public void setEducations(List<Education> educations) {
+        this.educations = educations;
+    }
+
     public List<Job> getJobs() {
         return jobs;
     }
