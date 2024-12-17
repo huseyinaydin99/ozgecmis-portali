@@ -3,10 +3,7 @@ package tr.com.huseyinaydin.resumeportal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import tr.com.huseyinaydin.resumeportal.models.Education;
 import tr.com.huseyinaydin.resumeportal.models.Job;
 import tr.com.huseyinaydin.resumeportal.models.UserProfile;
@@ -101,27 +98,32 @@ public class HomeController {
         String userId = principal.getName();
         model.addAttribute("userId", userId);
         Optional<UserProfile> userProfileOptional = userProfileRepository.findByUserName(userId);
-        userProfileOptional.orElseThrow(() -> new RuntimeException("Kullanıcı bulunamadı hacım: " + userId));
+        userProfileOptional.orElseThrow(() -> new RuntimeException("Kullanıcı bulunamadı nacim: " + userId));
         UserProfile userProfile = userProfileOptional.get();
         model.addAttribute("userProfile", userProfile);
         return "profile-edit";
     }
 
     @PostMapping("/edit")
-    public String postEdit(Model model, Principal principal) {
-        String userId = principal.getName();
-        // Form'dan gelen veriyi güncelleme
-        return "redirect:/view/" + userId;
+    public String postEdit(Model model, Principal principal, @ModelAttribute UserProfile userProfile) {
+        String userName = principal.getName();
+        Optional<UserProfile> userProfileOptional = userProfileRepository.findByUserName(userName);
+        userProfileOptional.orElseThrow(() -> new RuntimeException("Kullanıcı bulunamadı hacım: " + userName));
+        UserProfile savedUserProfile = userProfileOptional.get();
+        userProfile.setId(savedUserProfile.getId());
+        userProfile.setUserName(userName);
+        userProfileRepository.save(userProfile);
+        return "redirect:/view/" + userName;
     }
 
     @GetMapping("/view/{userId}")
     public String view(@PathVariable String userId, Model model) {
         Optional<UserProfile> userProfile = userProfileRepository.findByUserName(userId);
-        userProfile.orElseThrow(() -> new RuntimeException("Kullanıcı bulunamadı hacım: " + userId));
+        userProfile.orElseThrow(() -> new RuntimeException("Kullanıcı bulunamadı bacım: " + userId));
 
         model.addAttribute("userId", userId);
         model.addAttribute("userProfile", userProfile.get());
 
-        return "profile-templates/" + userProfile.get().getId() + "/index";
+        return "profile-templates/" + userProfile.get().getTheme() + "/index";
     }
 }
