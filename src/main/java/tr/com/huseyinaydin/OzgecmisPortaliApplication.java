@@ -16,7 +16,7 @@ import tr.com.huseyinaydin.resumeportal.UserRepository;
  */
 
 @SpringBootApplication
-@EnableJpaRepositories(basePackageClasses = UserRepository.class)
+@EnableJpaRepositories//(basePackageClasses = UserRepository.class)
 /*
 @EnableJpaRepositories(basePackageClasses = UserRepository.class) dipnotu, belirtilen sınıfın bulunduğu paketteki
 (veya alt paketlerdeki) JPA repository arayüzlerini otomatik olarak tarar ve Spring konteynerine kaydeder.
