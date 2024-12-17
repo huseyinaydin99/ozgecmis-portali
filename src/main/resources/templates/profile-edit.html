@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Profil</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 </head>
 <body>
-<h1 th:text="${userId} + '\'s Profile'">Profil</h1>
+<h1 th:text="${userId} + '\'s Profili'">Profil</h1>
 <div class="container">
     <form action="#" th:action="@{/edit}" th:object="${userProfile}" method="post">
         <div class="form-group">
@@ -19,7 +20,7 @@
         </div>
         <div class="form-group">
             <label>E-posta Adresi</label>
-            <input  class="form-control" th:field="*{email}">
+            <input class="form-control" th:field="*{email}">
         </div>
         <div class="form-group">
             <label>Telefon</label>
@@ -29,6 +30,55 @@
             <label>Atama</label>
             <input class="form-control" th:field="*{designation}">
         </div>
+
+        <h3>Deneyimler</h3>
+        <table>
+            <thead>
+            <tr>
+                <th>Şirket</th>
+                <th>Atama</th>
+                <th>Başlangıç Tarihi</th>
+                <th>Bitiş Tarihi</th>
+                <th>Şu an çalışıyor musunuz?</th>
+            </tr>
+            </thead>
+            <tr th:each="job, stat: *{jobs}">
+                <td><input class="form-control" th:field="*{jobs[__${stat.index}__].company}"></td>
+                <td><input class="form-control" th:field="*{jobs[__${stat.index}__].designation}"></td>
+                <td><input type="date" class="form-control" th:field="*{jobs[__${stat.index}__].startDate}"></td>
+                <td><input type="date" class="form-control" th:field="*{jobs[__${stat.index}__].endDate}"></td>
+                <td><input type="checkbox" class="form-control" th:field="*{jobs[__${stat.index}__].currentJob}"></td>
+            </tr>
+        </table>
+
+
+        <h3>Eğitim</h3>
+        <table>
+            <thead>
+            <tr>
+                <th>Kolej</th>
+                <th>Kalifikasyon</th>
+                <th>Başlangıç Tarihi</th>
+                <th>Bitiş Tarihi</th>
+                <th>Özet/Açıklama</th>
+            </tr>
+            </thead>
+            <tr th:each="education, stat: *{educations}">
+                <td><input class="form-control" th:field="*{educations[__${stat.index}__].college}"></td>
+                <td><input class="form-control" th:field="*{educations[__${stat.index}__].qualification}"></td>
+                <td><input type="date" class="form-control" th:field="*{educations[__${stat.index}__].startDate}"></td>
+                <td><input type="date" class="form-control" th:field="*{educations[__${stat.index}__].endDate}"></td>
+                <td><input class="form-control" th:field="*{educations[__${stat.index}__].summary}"></td>
+            </tr>
+        </table>
+
+        <h3>Yetenekler</h3>
+        <table>
+            <tr th:each="skill, stat: *{skills}">
+                <td><input class="form-control" th:field="*{skills[__${stat.index}__]}"></td>
+            </tr>
+        </table>
+        <input type="submit" value="Gönder">
     </form>
 </div>
 </body>
