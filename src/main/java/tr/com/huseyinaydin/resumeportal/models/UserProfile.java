@@ -31,6 +31,29 @@ public class UserProfile {
     private String phone;
     private String designation;
 
+    /*
+    UserProfile sınıfına bir iş ilanları (jobs) listesi ekledim ve her bir kullanıcı profiliyle ilişkili
+    işleri saklamak için @OneToMany ilişkilendirmesi kullandım. İlişkinin bütünlüğünü sağlamak ve yetim
+    verileri temizlemek için CascadeType.ALL ve orphanRemoval = true özelliklerini tanımladım.
+
+    CascadeType.ALL, ilişkili varlıklar üzerinde yapılan tüm işlemlerin (persist, merge, remove, refresh, detach)
+    otomatik olarak ilişkilendirilmiş varlıklara da uygulanmasını sağlar.
+
+    orphanRemoval = true, bir ilişkiden kaldırılan veya ilişki tarafından artık referans
+    edilmeyen bağlı varlıkların otomatik olarak silinmesini sağlar.
+     */
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "id")
+    List<Job> jobs = new ArrayList<>();
+
+    public List<Job> getJobs() {
+        return jobs;
+    }
+
+    public void setJobs(List<Job> jobs) {
+        this.jobs = jobs;
+    }
+
     public String getFirstName() {
         return firstName;
     }
