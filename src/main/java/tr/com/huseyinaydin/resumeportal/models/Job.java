@@ -37,6 +37,10 @@ public class Job {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
 
+    @ManyToOne
+    @JoinColumn(name = "user_profile_id")  // UserProfile ile ilişki
+    private UserProfile userProfile;
+
     /*
     @ElementCollection kullanıldığında, veriler aynı tabloda tutulmaz.
     Bunun yerine, JPA, bu koleksiyonu ayrı bir tabloya kaydeder.
@@ -127,5 +131,13 @@ public class Job {
 
     public String getFormattedEndDate() {
         return endDate.format(DateTimeFormatter.ofPattern("MMM yyyy"));
+    }
+
+    public UserProfile getUserProfile() {
+        return userProfile;
+    }
+
+    public void setUserProfile(UserProfile userProfile) {
+        this.userProfile = userProfile;
     }
 }

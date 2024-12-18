@@ -7,8 +7,9 @@
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 </head>
 <body>
-<h1 th:text="${userId} + '\'s Profili'">Profil</h1>
+
 <div class="container">
+    <h3 th:text="${userId} + '\'s Profili'">Profil</h3>
     <form action="#" th:action="@{/edit}" th:object="${userProfile}" method="post">
 
         <div class="form-group">
@@ -17,7 +18,6 @@
                 <option th:each="i : ${#numbers.sequence(1, 3)}" th:value="${i}" th:text="${'Tema ' + i}"></option>
             </select>
         </div>
-
         <div class="form-group">
             <label>Adı</label>
             <input class="form-control" th:field="*{firstName}">
@@ -48,14 +48,17 @@
         <table>
             <thead>
             <tr>
+
                 <th>Şirket</th>
                 <th>Atama</th>
                 <th>Başlangıç Tarihi</th>
                 <th>Bitiş Tarihi</th>
                 <th>Şu an çalışıyor musunuz?</th>
+                <th></th>
             </tr>
             </thead>
             <tr th:each="job, stat: *{jobs}">
+
                 <td><input class="form-control" th:field="*{jobs[__${stat.index}__].company}"></td>
                 <td><input class="form-control" th:field="*{jobs[__${stat.index}__].designation}"></td>
                 <td><input type="date" class="form-control" th:field="*{jobs[__${stat.index}__].startDate}"></td>
@@ -70,14 +73,17 @@
         <table>
             <thead>
             <tr>
+
                 <th>Kolej</th>
                 <th>Kalifikasyon</th>
                 <th>Başlangıç Tarihi</th>
                 <th>Bitiş Tarihi</th>
                 <th>Özet/Açıklama</th>
+                <th></th>
             </tr>
             </thead>
             <tr th:each="education, stat: *{educations}">
+
                 <td><input class="form-control" th:field="*{educations[__${stat.index}__].college}"></td>
                 <td><input class="form-control" th:field="*{educations[__${stat.index}__].qualification}"></td>
                 <td><input type="date" class="form-control" th:field="*{educations[__${stat.index}__].startDate}"></td>

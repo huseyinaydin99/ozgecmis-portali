@@ -21,7 +21,7 @@ import java.util.List;
  */
 
 @Entity
-@Table
+@Table(name = "Educations")
 public class Education {
 
     @Id
@@ -38,6 +38,10 @@ public class Education {
     private LocalDate endDate;
 
     private String summary;
+
+    @ManyToOne
+    @JoinColumn(name = "user_profile_id")  // UserProfile ile ilişki
+    private UserProfile userProfile;
 
     public int getId() {
         return id;

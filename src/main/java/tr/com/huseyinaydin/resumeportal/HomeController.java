@@ -99,7 +99,7 @@ public class HomeController {
         String userId = principal.getName();
         model.addAttribute("userId", userId);
         Optional<UserProfile> userProfileOptional = userProfileRepository.findByUserName(userId);
-        userProfileOptional.orElseThrow(() -> new RuntimeException("Kullanıcı bulunamadı nacim: " + userId));
+        userProfileOptional.orElseThrow(() -> new RuntimeException("Kullanıcı bulunamadı hacım: " + userId));
         UserProfile userProfile = userProfileOptional.get();
 
         if ("job".equals(add)) {
@@ -122,6 +122,10 @@ public class HomeController {
         UserProfile savedUserProfile = userProfileOptional.get();
         userProfile.setId(savedUserProfile.getId());
         userProfile.setUserName(userName);
+
+        /*userProfile.getEducations().forEach(e -> e.setId(savedUserProfile.getId()));
+        userProfile.getJobs().forEach(j -> j.setId(savedUserProfile.getId()));*/
+
         userProfileRepository.save(userProfile);
         return "redirect:/view/" + userName;
     }
@@ -150,12 +154,14 @@ public class HomeController {
             model.addAttribute("currentUsersProfile", currentUsersProfile);
         }
         String userName = principal.getName();
-        Optional<UserProfile> userProfile = userProfileRepository.findByUserName(userId);
-        userProfile.orElseThrow(() -> new RuntimeException("Kullanıcı bulunamadı bacım: " + userId));
+        Optional<UserProfile> userProfileOptional = userProfileRepository.findByUserName(userId);
+        userProfileOptional.orElseThrow(() -> new RuntimeException("Kullanıcı bulunamadı hacım: " + userId));
 
         model.addAttribute("userId", userId);
-        model.addAttribute("userProfile", userProfile.get());
+        UserProfile userProfile = userProfileOptional.get();
+        model.addAttribute("userProfile", userProfile);
+        System.out.println(userProfile.getJobs());
 
-        return "profile-templates/" + userProfile.get().getTheme() + "/index";
+        return "profile-templates/" + userProfile.getTheme() + "/index";
     }
 }

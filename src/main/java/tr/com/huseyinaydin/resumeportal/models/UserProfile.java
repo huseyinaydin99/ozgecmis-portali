@@ -43,11 +43,11 @@ public class UserProfile {
     edilmeyen bağlı varlıkların otomatik olarak silinmesini sağlar.
      */
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "user_profile_id")
     List<Job> jobs = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "user_profile_id")
     List<Education> educations = new ArrayList<>();
 
     /*
