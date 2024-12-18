@@ -38,7 +38,7 @@ public class HomeController {
         profile.setFirstName("Hüseyin");
         profile.setLastName("Aydın");
         profile.setTheme(1);*/
-        Optional<UserProfile> userProfileOptional = userProfileRepository.findByUserName("huseyinaydin99");
+        /*Optional<UserProfile> userProfileOptional = userProfileRepository.findByUserName("huseyinaydin99");
         UserProfile profile = userProfileOptional.get();
 
         Job job = new Job();
@@ -46,7 +46,7 @@ public class HomeController {
         job.setDesignation("Atama");
         job.setId(1);
         job.setStartDate(LocalDate.of(2024, 1, 1));
-        //job.setEndDate(LocalDate.of(2025,1,1));
+        job.setEndDate(LocalDate.of(2025,1,1));
         job.setCurrentJob(true);
         job.getResponsibilities().add("Spring Framework");
         job.getResponsibilities().add("Spring Boot");
@@ -89,8 +89,9 @@ public class HomeController {
         profile.getJobs().clear();
         profile.getJobs().addAll(Arrays.asList(job, job2));
 
-        userProfileRepository.save(profile);
-        return "profile";
+        userProfileRepository.save(profile);*/
+        //return "profile";
+        return "index";
     }
 
     @GetMapping("/edit")
