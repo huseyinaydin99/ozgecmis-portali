@@ -63,7 +63,7 @@
                 <td><input type="checkbox" class="form-control" th:field="*{jobs[__${stat.index}__].currentJob}"></td>
             </tr>
         </table>
-
+        <p><a href="./edit?add=job">İş Ekle</a></p>
 
         <h3>Eğitim</h3>
         <table>
@@ -84,6 +84,7 @@
                 <td><input class="form-control" th:field="*{educations[__${stat.index}__].summary}"></td>
             </tr>
         </table>
+        <p><a href="./edit?add=education">Eğitim Ekle</a></p>
 
         <h3>Yetenekler</h3>
         <table>
@@ -91,6 +92,7 @@
                 <td><input class="form-control" th:field="*{skills[__${stat.index}__]}"></td>
             </tr>
         </table>
+        <p><a href="./edit?add=skill">Yetenek Ekle</a></p>
         <input type="submit" value="Gönder">
     </form>
 </div>

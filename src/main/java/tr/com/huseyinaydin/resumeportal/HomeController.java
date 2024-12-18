@@ -94,12 +94,21 @@ public class HomeController {
     }
 
     @GetMapping("/edit")
-    public String edit(Model model, Principal principal) {
+    public String edit(Model model, Principal principal, @RequestParam(required = false) String add) {
         String userId = principal.getName();
         model.addAttribute("userId", userId);
         Optional<UserProfile> userProfileOptional = userProfileRepository.findByUserName(userId);
         userProfileOptional.orElseThrow(() -> new RuntimeException("Kullanıcı bulunamadı nacim: " + userId));
         UserProfile userProfile = userProfileOptional.get();
+
+        if ("job".equals(add)) {
+            userProfile.getJobs().add(new Job());
+        } else if ("education".equals(add)) {
+            userProfile.getEducations().add(new Education());
+        } else if ("skill".equals(add)) {
+            userProfile.getSkills().add("");
+        }
+
         model.addAttribute("userProfile", userProfile);
         return "profile-edit";
     }
