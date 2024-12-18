@@ -125,8 +125,30 @@ public class HomeController {
         return "redirect:/view/" + userName;
     }
 
+    @GetMapping("/delete")
+    public String delete(Model model, Principal principal, @RequestParam String type, @RequestParam int index) {
+        String userId = principal.getName();
+        Optional<UserProfile> userProfileOptional = userProfileRepository.findByUserName(userId);
+        userProfileOptional.orElseThrow(() -> new RuntimeException("Kullanıcı bulunamadı hacım: " + userId));
+        UserProfile userProfile = userProfileOptional.get();
+        if ("job".equals(type)) {
+            userProfile.getJobs().remove(index);
+        } else if ("education".equals(type)) {
+            userProfile.getEducations().remove(index);
+        } else if ("skill".equals(type)) {
+            userProfile.getSkills().remove(index);
+        }
+        userProfileRepository.save(userProfile);
+        return "redirect:/edit";
+    }
+
     @GetMapping("/view/{userId}")
-    public String view(@PathVariable String userId, Model model) {
+    public String view(Principal principal, @PathVariable String userId, Model model) {
+        if (principal != null && principal.getName() != "") {
+            boolean currentUsersProfile = principal.getName().equals(userId);
+            model.addAttribute("currentUsersProfile", currentUsersProfile);
+        }
+        String userName = principal.getName();
         Optional<UserProfile> userProfile = userProfileRepository.findByUserName(userId);
         userProfile.orElseThrow(() -> new RuntimeException("Kullanıcı bulunamadı bacım: " + userId));
 
